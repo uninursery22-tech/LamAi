@@ -1,0 +1,19 @@
+
+plugins {
+    id 'com.android.application' version '8.7.3' apply false
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    namespace 'com.lamai.app'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.lamai.app'
+        minSdk 23
+        targetSdk 28
+        versionCode 1
+        versionName '1.0'
+    }
+}
