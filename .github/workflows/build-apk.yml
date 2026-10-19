@@ -1,0 +1,23 @@
+name: Build Lam.ai APK
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/build-apk.yml'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Build APK
+        run: |
+          if [ -f gradlew ]; then chmod +x gradlew && ./gradlew assembleDebug; else echo 'Android Gradle project files are missing'; exit 1; fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Lam-ai-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
