@@ -9,10 +9,6 @@ on:
       - 'app/**'
       - 'build.gradle'
       - 'settings.gradle'
-      - 'gradle/**'
-
-permissions:
-  contents: read
 
 jobs:
   build:
@@ -31,16 +27,15 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Gradle
-        uses: gradle/actions/setup-gradle@v4
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses
 
-      - name: Build APK
-        run: gradle assembleDebug
+      - name: Build debug APK
+        run: gradle --version && gradle assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Lam-ai-debug-apk
+          name: Lam-ai-APK
           path: app/build/outputs/apk/debug/*.apk
-          if-no-files-found: error
           
